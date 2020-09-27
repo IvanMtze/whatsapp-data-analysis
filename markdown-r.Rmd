@@ -1,0 +1,33 @@
+---
+title: "R Notebook for whatsapp data analysis"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook.
+
+
+Load library rwhatsapp
+```{r}
+library("rwhatsapp")
+```
+
+We just need to import our chat (s) to make an analysis.
+
+```{r}
+chat <- rwa_read("Chat.txt")
+```
+
+This result on a data.frame with the information of chat(s).
+
+On this example, I made an analysis on a friend chat. For example: I want to know how many messages he send on a day.
+```{r}
+library("ggplot2"); theme_set(theme_minimal())
+library("lubridate")
+chat %>%
+  mutate(day = date(time)) %>%
+  count(day) %>%
+  ggplot(aes(x = day, y = n)) +
+  geom_bar(stat = "identity") +
+  ylab("") + xlab("") +
+  ggtitle("Messages per day")
+```
